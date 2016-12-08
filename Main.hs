@@ -8,4 +8,4 @@ main = do
     file <- readFile "example.bf"
     case parse file of
          Left err -> showParseError err
-         Right bf -> execute_ bf
+         Right bf -> execute bf
