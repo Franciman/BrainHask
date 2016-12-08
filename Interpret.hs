@@ -33,7 +33,7 @@ interpretInstr IncrementByte          = modify $ updateCell (+1)
 interpretInstr DecrementByte          = modify $ updateCell (1 `subtract`)
 interpretInstr Output                 = gets cell >>= \byte -> lift (writeByte byte)
 interpretInstr Input                  = lift readByte >>= \byte -> modify $ updateCellWithValue byte
-interpretInstr loop@(Squared instrs) = do
+interpretInstr loop@(Squared instrs)  = do
     byteData <- gets cell
     if (byteData == 0)
        then return ()
