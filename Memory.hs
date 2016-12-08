@@ -2,22 +2,22 @@ module Memory where
 
 type Memory a = [a]
 
-type MemoryZipper a = (Memory a, Memory a)
+type MemoryZipper a = (a, Memory a, Memory a)
 
 zipped :: Memory a -> MemoryZipper a
-zipped mem = (mem, [])
+zipped mem = (head mem, tail mem, [])
 
 next :: MemoryZipper a -> MemoryZipper a
-next (x:xs, ys) = (xs, x:ys) 
+next (c ,x:xs, ys) = (x, xs, c:ys) 
 
 previous :: MemoryZipper a -> MemoryZipper a
-previous (xs, y:ys) = (y:xs, ys)
+previous (c, xs, y:ys) = (y, c:xs, ys)
 
 updateCell :: (a -> a) -> MemoryZipper a -> MemoryZipper a
-updateCell f (x:xs, ys) = (f x : xs, ys)
+updateCell f (c, xs, ys) = (f c, xs, ys)
 
 updateCellWithValue :: a -> MemoryZipper a -> MemoryZipper a
 updateCellWithValue val = updateCell (const val)
 
 cell :: MemoryZipper a -> a
-cell (x:xs, _) = x
+cell (c, xs, ys) = c
