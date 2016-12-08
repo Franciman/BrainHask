@@ -41,4 +41,4 @@ execute' mem Output                 = writeByte (cell mem) >> return mem
 execute' mem Input                  = (flip apply) mem <$> (const <$> readByte)
 execute' mem instr@(Squared instrs) = if cell mem == 0
                                          then return mem
-                                         else (doExecute mem instrs >>= \mem' -> execute' mem' instr)
+                                         else doExecute mem instrs >>= \mem' -> execute' mem' instr
